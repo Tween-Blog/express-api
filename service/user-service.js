@@ -16,9 +16,7 @@ class UserService {
 
         const candidate = await UserModel.findOne({email});
 
-        if(candidate) {
-            throw ApiError.BadRequest('Пользователь с таким E-Mail уже существует!');
-        }
+        if(candidate) throw ApiError(200, 'Пользователь с таким E-Mail уже существует.', ['email_already_exists']);
 
         const hashPassword = await bcrypt.hash(password, 3);
         const activationLink = uuid.v4();
@@ -37,16 +35,10 @@ class UserService {
         if(!email || !password || email == '' || password == '') throw ApiError.UserDataEmpty();
 
         const user = await UserModel.findOne({email});
-
-        if(!user) {
-            throw ApiError.BadRequest('Пользователь с таким E-Mail не найден.');
-        }
+        if(!user) throw ApiError(200, 'Пользователь с таким E-Mail не найден.', ['email_not_found']);
 
         const isPasswordEquals = await bcrypt.compare(password, user.password);
-
-        if(!isPasswordEquals) {
-            throw ApiError.BadRequest('Неверный пароль.');
-        }
+        if(!isPasswordEquals) throw ApiError(200, 'Неверный пароль.', ['wrong_password']);
 
         const userDto = new UserDto(user);
         const tokens = tokenService.generateTokens({...userDto});
