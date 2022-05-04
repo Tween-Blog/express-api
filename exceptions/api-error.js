@@ -3,9 +3,13 @@ module.exports = class ApiError extends Error {
     error;
    
     constructor(status, message, error = null) {
-        super(message);
+        super(message, error);
         this.status = status;
-        this.error = error;
+
+        if(status == 400) this.error = 'bad_request';
+        if(status == 401) this.error = 'unauthorized';
+        if(status == 500) this.error = 'internal_server_error';
+        if(error != null) this.error = error;
     } 
 
     static UnauthorizedError() {
