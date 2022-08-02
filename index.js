@@ -15,18 +15,11 @@ const app = express();
 
 process.env.PWD = process.cwd();
 
-const corsOptions = {
-    origin: process.env.CLIENT_URL,
-    allowMethods: 'GET, POST, PUT, DELETE, OPTIONS',
-    allowHeaders: 'X-Requested-With, Content-Type, Authorization',
-    credentials: true
-}
-
 app.use(express.static(path.join(process.env.PWD, 'static')));
 app.use(express.json());
 app.use(fileUpload());
 app.use(cookieParser());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use('/api', router);
 app.use(errorMiddleware);
 
