@@ -45,6 +45,8 @@ class PostService {
         const post = await PostModel.findById(postId);
         if(!post) throw ApiError.PostNotFound();
 
+        const updatedPost = await PostModel.findByIdAndUpdate(postId, body, {new: true});
+
         if(isPicture) {
             const pictureName = fileService.saveFile(files.picture, 'posts');
 
@@ -56,9 +58,7 @@ class PostService {
             delete body.picture;
         }
 
-        const updatedPost = await PostModel.findByIdAndUpdate(postId, body, {new: true});
         const updatedPostDto = new PostDto(updatedPost);
-
         return updatedPostDto;
     }
 
