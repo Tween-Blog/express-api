@@ -47,6 +47,22 @@ class LikeService {
 
         return post;
     }
+
+    async checkLike({userId, postId}) {
+        if(!userId || !postId) throw ApiError.BadRequest('Не все данные заполнены.');
+
+        if(userId.length != 24) throw ApiError.UserIdNotCorrectly();
+        const user = await UserModel.findById(userId);
+        if(!user) throw ApiError.UserNotFound();
+
+        if(postId.length != 24) throw ApiError.PostIdNotCorrectly();
+        const post = await PostModel.findById(postId);
+        if(!post) throw ApiError.PostNotFound();
+
+        const isLike = await LikeModel.findOne({postId, userId});
+
+        return !isLike ? {isLike: false} : {isLike: true};
+    }
 }
 
 module.exports = new LikeService();

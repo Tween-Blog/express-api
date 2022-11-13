@@ -34,9 +34,11 @@ router.delete('/comments', authMiddleware, commentController.delete);
 
 router.post('/like', authMiddleware, likeController.like);
 router.post('/dislike', authMiddleware, likeController.dislike);
+router.post('/check-like', authMiddleware, likeController.checkLike);
 
 router.post('/subscribe', authMiddleware, subscriptionController.subscribe);
 router.post('/unsubscribe', authMiddleware, subscriptionController.unsubscribe);
+router.post('/check-subscribe', authMiddleware, subscriptionController.checkSubscribe);
 
 router.get('/user-subscribers/:userId', authMiddleware, subscriptionController.getUserSubscribers);
 router.get('/user-subscriptions/:userId', authMiddleware, subscriptionController.getUserSubscriptions);

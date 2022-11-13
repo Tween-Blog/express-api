@@ -99,6 +99,22 @@ class SubscriptionService {
 
         return userSubscriptionsDto;
     }
+
+    async checkSubscribe({executorUserId, targetUserId}) {
+        if(!executorUserId || !targetUserId) throw ApiError.UserDataEmpty();
+
+        if(executorUserId.length != 24 || targetUserId.length != 24) throw ApiError.UserIdNotCorrectly();
+
+        const executorUser = await UserModel.findById(executorUserId);
+        if(!executorUser) throw ApiError.BadRequest('Executor User с таким ID не найден.');
+
+        const targetUser = await UserModel.findById(targetUserId);
+        if(!targetUser) throw ApiError.BadRequest('Target User с таким ID не найден.');
+
+        const isSubscribe = await SubscriptionModel.findOne({executorUserId, targetUserId});
+
+        return !isSubscribe ? {isSubscribe: false} : {isSubscribe: true};
+    }
 }
 
 module.exports = new SubscriptionService();

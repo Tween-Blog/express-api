@@ -18,6 +18,15 @@ class LikeController {
             next(e);
         }
     }
+
+    async checkLike(req, res, next) {
+        try {
+            const isLike = await likeService.checkLike(req.body);
+            res.json(isLike);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new LikeController();

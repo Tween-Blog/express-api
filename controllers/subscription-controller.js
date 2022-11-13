@@ -36,6 +36,15 @@ class SubscriptionController {
             next(e);
         }
     }
+
+    async checkSubscribe(req, res, next) {
+        try {
+            const isSubscribe = await subscriptionService.checkSubscribe(req.body);
+            res.json(isSubscribe);
+        } catch (e) {
+            next(e);
+        }
+    }
 }
 
 module.exports = new SubscriptionController();
