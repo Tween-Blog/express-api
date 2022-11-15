@@ -113,7 +113,7 @@ class UserService {
         if(isAvatar) {
             const avatarName = fileService.saveFile(filesData.avatar, 'avatars');
 
-            if(updatedUser.avatar.split('.')[0] != 'default-avatar') fileService.removeFile(updatedUser.avatar, 'avatars');
+            if(updatedUser.avatar.split('.')[0] != 'default-avatar-without-l') fileService.removeFile(updatedUser.avatar, 'avatars');
 
             updatedUser.avatar = avatarName;
             updatedUser.save();
