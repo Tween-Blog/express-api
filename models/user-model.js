@@ -5,7 +5,7 @@ const UserSchema = new Schema({
     password: {type: String, required: true},
     nick: {type: String, required: true},
     description: {type: String, default: 'Пусто.'},
-    avatar: {type: String, default: 'default-avatar-without-l.png'},
+    avatar: {type: String, default: 'default-avatar.png'},
     postsCount: {type: Number, default: 0},
     subscribersCount: {type: Number, default: 0},
     subscriptionsCount: {type: Number, default: 0},
